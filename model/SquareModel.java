@@ -8,6 +8,7 @@ public class SquareModel {
     private final int size = 20;
     private int vx = 0;
     private int vy = 0;
+    private boolean outOfBounds = false;
 
     public int getX() {
         return x;
@@ -29,18 +30,21 @@ public class SquareModel {
         this.vy = vy;
     }
 
+    public boolean isOutOfBounds() {
+        return outOfBounds;
+    }
+
     public void updatePosition(Dimension bounds) {
         x += vx;
         y += vy;
 
-        // handle boundaries
-        if (x < 0)
-            x = 0;
-        if (y < 0)
-            y = 0;
-        if (x + size > bounds.width)
-            x = bounds.width - size;
-        if (y + size > bounds.height)
-            y = bounds.height - size;
+        // handle boundaries and update out-of-bounds state
+       outOfBounds = false;
+       if (x < 0 || x + size > bounds.width || y < 0 || y + size > bounds.height) {
+        outOfBounds = true;
+        //Adjust the position to stay within bounds if needed
+        x = Math.max(0, Math.min(x, bounds.width - size));
+        y = Math.max(0, Math.min(y, bounds.height - size));
+       }
     }
 }

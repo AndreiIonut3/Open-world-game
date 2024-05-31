@@ -1,11 +1,9 @@
 package app;
 
 import javax.swing.*;
-
 import controller.SquareController;
 import model.SquareModel;
 import view.SquareView;
-
 import java.awt.event.ActionEvent;
 
 public class Main {
@@ -23,6 +21,7 @@ public class Main {
 
             view.addKeyListener(controller);
             view.setFocusable(true);
+            view.requestFocusInWindow(); // Ensures the view has focus to receive key events
 
             Timer timer = new Timer(20, (ActionEvent e) -> {
                 model.updatePosition(view.getSize());
